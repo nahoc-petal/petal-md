@@ -12,7 +12,7 @@ const Disc = (props) => {
   return (
     <div className="randomDisc">
       <h1 className="title">{renderArtists(props.artists)} - {props.title}</h1>
-      <h2 className="subtitle">({props.year})</h2>
+      <h2 className="subtitle">{props.year !== 0 ? props.year : null}</h2>
       <iframe 
         type="text/html" 
         width="640" 

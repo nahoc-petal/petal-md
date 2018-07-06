@@ -23,15 +23,19 @@ export default class RandomDisc extends React.Component {
   }
 
   fetchYoutubeVideo(randomDisc) {
-    const apiUrl = randomDisc.basic_information.resource_url
-    axios.get(apiUrl)
-      .then(res => {
-        const youtubeVideoUrl = res.data.videos[0].uri
-        const youtubeVideoUrlEmbed = 'https://youtube.com/embed/' + youtubeVideoUrl.split('=')[1]
-        this.setState({ 
-          youtubeVideoUrlEmbed,
+    if(randomDisc) {
+      const apiUrl = randomDisc.basic_information.resource_url
+      axios.get(apiUrl)
+        .then(res => {
+          if(res.data.videos) {
+            const youtubeVideoUrl = res.data.videos[0].uri
+            const youtubeVideoUrlEmbed = 'https://youtube.com/embed/' + youtubeVideoUrl.split('=')[1]
+            this.setState({ 
+              youtubeVideoUrlEmbed,
+            })
+          }
         })
-      })
+    }
   }
 
   renderRandomDisc() {
@@ -60,7 +64,7 @@ export default class RandomDisc extends React.Component {
         : null}
         <button 
           disabled={!isDoneFetching} 
-          className="button is-primary" 
+          className="button is-primary is-large" 
           type="button" 
           onClick={() => this.renderRandomDisc()}
         >
