@@ -8,6 +8,7 @@ export default class RandomDisc extends React.Component {
     randomDisc: null,
     isDoneFetching: false,
     youtubeVideoUrlEmbed: null,
+    isLoading: null,
   }
 
   componentWillMount() {
@@ -28,7 +29,8 @@ export default class RandomDisc extends React.Component {
       axios.get(apiUrl)
         .then(res => {
           if(res.data.videos) {
-            const youtubeVideoUrl = res.data.videos[0].uri
+            const randomNumber = Math.floor((Math.random() * res.data.videos.length))
+            const youtubeVideoUrl = res.data.videos[randomNumber].uri
             const youtubeVideoUrlEmbed = 'https://youtube.com/embed/' + youtubeVideoUrl.split('=')[1]
             this.setState({ 
               youtubeVideoUrlEmbed,
@@ -39,10 +41,17 @@ export default class RandomDisc extends React.Component {
   }
 
   renderRandomDisc() {
-    const randomNumber = Math.floor((Math.random() * 50) + 1)
+    const randomNumber = Math.floor((Math.random() * 50))
     this.setState({
+      isLoading: true,
       randomDisc: this.state.discs[randomNumber],
     }, () => this.fetchYoutubeVideo(this.state.randomDisc))
+  }
+
+  handleIframeLoaded() {
+    this.setState({
+      isLoading: false,
+    })
   }
 
   render() {
@@ -50,6 +59,7 @@ export default class RandomDisc extends React.Component {
       randomDisc,
       isDoneFetching,
       youtubeVideoUrlEmbed,
+      isLoading,
     } = this.state
 
     return (
@@ -60,11 +70,13 @@ export default class RandomDisc extends React.Component {
             year={randomDisc.basic_information.year} 
             artists={randomDisc.basic_information.artists}
             youtubeVideoUrlEmbed={youtubeVideoUrlEmbed}
+            iframeLoaded={() => this.handleIframeLoaded()}
           />
-        : null}
+        : <div style={{width: 640, height: 360, background: '#fafafa', margin: 'auto', marginTop: '95px'}} />}
+        <br/><br/>
         <button 
           disabled={!isDoneFetching} 
-          className="button is-primary is-large" 
+          className={isLoading ? "button is-primary is-large is-loading" : "button is-primary is-large"}
           type="button" 
           onClick={() => this.renderRandomDisc()}
         >
