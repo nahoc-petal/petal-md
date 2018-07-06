@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const renderArtists = (artists) => (
   artists.map((d, idx) => {
@@ -22,5 +23,11 @@ const Disc = (props) => (
     />
   </div>
 )
+
+Disc.propTypes = {
+  title: PropTypes.string,
+  year: PropTypes.number,
+  artists: PropTypes.array,
+};
 
 export default Disc

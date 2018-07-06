@@ -75,7 +75,7 @@ export default class RandomDisc extends React.Component {
         : <div style={{width: 640, height: 360, background: '#fafafa', margin: 'auto', marginTop: '95px'}} />}
         <br/><br/>
         <button 
-          disabled={!isDoneFetching} 
+          disabled={!isDoneFetching || isLoading} 
           className={isLoading ? "button is-primary is-large is-loading" : "button is-primary is-large"}
           type="button" 
           onClick={() => this.renderRandomDisc()}
