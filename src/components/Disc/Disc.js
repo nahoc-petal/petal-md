@@ -9,25 +9,36 @@ const renderArtists = (artists) => (
   })
 )
 
-const Disc = (props) => (
-  <div className="randomDisc">
-    <h1 className="title">{renderArtists(props.artists)} - {props.title}</h1>
-    <h2 className="subtitle">{props.year !== 0 ? props.year : <br/>}</h2>
-    <iframe 
-      type="text/html" 
-      width="640" 
-      height="360"
-      src={props.youtubeVideoUrlEmbed}
-      frameBorder="0"
-      onLoad={props.iframeLoaded}
-    />
-  </div>
-)
+const Disc = (props) => {
+  const {
+    artists,
+    title,
+    year,
+    youtubeVideoUrlEmbed,
+    iframeLoaded,
+  } = props
+  return(
+    <div className="randomDisc">
+      <h1 className="title">{renderArtists(artists)} - {title}</h1>
+      <h2 className="subtitle">{year !== 0 ? year : <br/>}</h2>
+      <iframe 
+        type="text/html" 
+        width="640" 
+        height="360"
+        src={youtubeVideoUrlEmbed}
+        frameBorder="0"
+        onLoad={iframeLoaded}
+      />
+    </div>
+  )
+}
 
 Disc.propTypes = {
-  title: PropTypes.string,
-  year: PropTypes.number,
-  artists: PropTypes.array,
+  title: PropTypes.string.isRequired,
+  year: PropTypes.number.isRequired,
+  artists: PropTypes.array.isRequired,
+  iframeLoaded: PropTypes.func.isRequired,
+  youtubeVideoUrlEmbed: PropTypes.string.isRequired,
 };
 
 export default Disc
