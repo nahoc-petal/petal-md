@@ -28,6 +28,7 @@ const Disc = (props) => {
       <h2 className="subtitle">{year && year !== 0 ? year : <br/>}</h2>
       {youtubeVideoUrl ?
         <iframe 
+          title="youtube"
           type="text/html" 
           width="640" 
           height="360"
@@ -35,7 +36,7 @@ const Disc = (props) => {
           frameBorder="0"
           onLoad={iframeLoaded ? iframeLoaded : null}
         />
-      : <p className="notification">No YouTube link provided</p>}
+      : <p className="notification">Broken YouTube link :(</p>}
     </div>
   )
 }
@@ -45,7 +46,7 @@ Disc.propTypes = {
   year: PropTypes.number.isRequired,
   artists: PropTypes.array.isRequired,
   iframeLoaded: PropTypes.func.isRequired,
-  youtubeVideoUrl: PropTypes.string.isRequired,
+  youtubeVideoUrl: PropTypes.string,
 }
 
 export default Disc
